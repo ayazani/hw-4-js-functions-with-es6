@@ -14,11 +14,7 @@ console.log(splitAndMerge("Hello World!",","));
 
 // 2 task
 let convert = (obj) => {
-    let result = [];
-    for (let key in obj){
-        result.push([key, obj[key]]);
-    }
-    return result;
+    return Object.entries(obj);
 };
 //console.log(convert({name: 'Jeremy', age: 24, role: 'Software Engineer'}));
 
@@ -28,13 +24,13 @@ let toCamelCase  = (str) => {
     let isSymbol = false;
     for (let i of str){
         if(i === "-" || i === "_"){
-         isSymbol = true;
-         continue
+            isSymbol = true;
+            continue
         } else if (isSymbol) {
             result += i.toUpperCase();
             isSymbol = false;
         } else {
-        result += i;
+            result += i;
         }
     }
     return result;
@@ -45,33 +41,27 @@ console.log(toCamelCase("The_Stealth_Warrior"));
  */
 
 // 4 task
-let reverseWords = (str) =>  str.split("").reverse().join("");
-//console.log(reverseWords(" A fun little challenge! "));
+let reverseWords = (str) =>  str.split("").reverse().join("").split(' ').reverse().join(' ');
+//console.log(reverseWords(" A fun little challenge! "));  // => " A nuf elttil !egnellahc "
 
 // 5 task
 let stringExpansion = (str) => {
-    let hasNumbers = false;
     let res = "";
     for (let i = 0; i < str.length; i++){
-        if(!isNaN(Number(str[i]))){
-            hasNumbers = true;
-            if(Number(str[i]) && Number(str[i+1])){
-                continue;
-            } else {
-                for (let j = 0; j < Number(str[i]); j++) {
-                    res += str[i + 1];
-                }
+        if(!isNaN(Number(str[i])) && isNaN(Number(str[ i + 1]))){
+            for (let j = 0; j < Number(str[i]); j++) {
+                res += str[i + 1];
             }
         }
     }
-    return hasNumbers ? res : str;
+    return res ? res : str;
 };
- //cond check
+//cond check
 /*
 console.log(stringExpansion('3D2a5d2f') === 'DDDaadddddff');
 console.log(stringExpansion('3d332f2a') === 'dddffaa');
 console.log(stringExpansion('abcde') === 'abcde');
- */
+*/
 
 // 6 task
 let largest =  (...args) => {
@@ -95,8 +85,8 @@ let smallest = (...args)=> {
 // 7 task
 let transform = (arr) => {
     let res = [];
-    arr.forEach(function(item) {
-        res.push(function () {
+    arr.forEach((item) => {
+        res.push( () => {
             return item;
         })
     });
@@ -112,7 +102,7 @@ console.log(newArray[4]()); // should return 50
 // 8 task
 let sum = (arg, ...args) => {
     if(args.length === 0){
-        return !arg ? 0 : arg;
+        return 0;
     }
     else if (args.length === 1){
         return arg + args[0];
@@ -122,17 +112,23 @@ let sum = (arg, ...args) => {
         return (arg + sum(temp, ...args));
     }
 };
+let sumReduce = (...args) =>{
+    return args.reduce((total, currentValue)=>{
+        return total + currentValue
+    });
+};
 /* //check
 let a = sum(1, 3, 5, 7);
-console.log(a); */
+let b = sumReduce(1, 3, 5, 7);
+console.log(a===16 && b===16); */
 
 // 9 task
 let countDown = (arg) => {
     if (arg === 0){
-        console.log(0);
+        setTimeout(function (){console.log(0)}, 1000);
     } else {
-        console.log(arg);
-        countDown(arg-1);
+        setTimeout(function (){console.log(arg);}, 1000);
+        setTimeout(function (){countDown(arg-1)}, 1000);
     }
 };
 //countDown(3); // 3 2 1 0
